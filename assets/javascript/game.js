@@ -30,14 +30,17 @@ var newGame = false;
 
 //Selects a word from the word bank and sets # of guesses
 var getNewWord = function(){
+    console.log("I picked a new word.");
     var randomNumber = Math.floor((Math.random() * 14));
     targetWord = wordBank[randomNumber];
     targetWordArray = targetWord.split('');
     numberOfGuesses = 10;
+    dashForLetters();
 }
 
 //Creates an array of _'s the same length as the target word
 var dashForLetters = function(){
+    dashedWord = [];
     for(var i=0; i < targetWord.length; i++){
         dashedWord.push("_");
     }
@@ -54,14 +57,8 @@ var equalArrays = function(){
     var twStr = targetWordArray.toString();
     var dwStr = dashedWord.toString();
     if(twStr === dwStr){
-        console.log(twStr);
-        console.log(dwStr);
-        newGame = true;
-        
-    } else{
-        console.log(twStr);
-        console.log(dwStr);
-        newGame = false;
+        //Add Target word to "Completed Words" div in HTML
+        getNewWord();
     }
 }
 
@@ -74,19 +71,7 @@ var checkTargetWord = function(){
         }
     }
     equalArrays();
-    if(newGame = true){
-        getNewWord();
-        console.log("I picked a new word.");
-    }
-    // targetWordArray.forEach(function(letter){
-    //     if(userGuess === letter){
-    //         var dashIndex = targetWordArray.indexOf(letter);
-    //         dashedWord[dashIndex] = letter;
-    //         if(targetWordArray === dashedWord){
-    //             getNewWord();
-    //         }
-    //     }
-    // });
+
 }
 
 
@@ -94,7 +79,6 @@ var checkTargetWord = function(){
 
 //Calls
 getNewWord();
-dashForLetters();
 document.onkeyup = function (event) {
     userGuess = event.key.toLowerCase();
     userGuessCode = event.keyCode;
