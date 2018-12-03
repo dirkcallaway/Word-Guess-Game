@@ -16,61 +16,81 @@ var wordBank = [
     "lights"
 ];
 var targetWord = "";
-var targetWordArray=[];
+var targetWordArray = [];
 var dashedWord = [];
 var guessedLetters = "";
 var userGuess = "";
 var userGuessCode;
 var numberOfGuesses;
 var newGame = false;
+var completedWords = [];
 
+var dashes = document.getElementById("dashed-letters");
+var gletters = document.getElementById("guessed-letters");
+var remainingGuesses = document.getElementById("remaining-guesses");
+var completedWordsList = document.getElementById("completed-words");
 
 
 //Functions
 
 //Selects a word from the word bank and sets # of guesses
-var getNewWord = function(){
+//Also Resets game
+var getNewWord = function () {
     console.log("I picked a new word.");
     var randomNumber = Math.floor((Math.random() * 14));
     targetWord = wordBank[randomNumber];
     targetWordArray = targetWord.split('');
     numberOfGuesses = 10;
     dashForLetters();
+    dashes.textContent = dashedWord.join(" ");
+    remainingGuesses.textContent = (numberOfGuesses);
+    //Clears guessed letters when new word is chosen
+    guessedLetters = "";
+    gletters.textContent = guessedLetters;
 }
 
+
 //Creates an array of _'s the same length as the target word
-var dashForLetters = function(){
+var dashForLetters = function () {
     dashedWord = [];
-    for(var i=0; i < targetWord.length; i++){
+    for (var i = 0; i < targetWord.length; i++) {
         dashedWord.push("_");
     }
 }
 
-//Only registers aplhabet keys pressed
-var guessedLettersList = function(){
-    if(userGuessCode >= 65 && userGuessCode <= 90)
-    guessedLetters += userGuess + ", ";
+//Only registers aplhabet keys pressed and adds them to guessed letters
+var guessedLettersList = function () {
+    if (userGuessCode >= 65 && userGuessCode <= 90) {
+        numberOfGuesses--;
+        guessedLetters += userGuess + ", ";
+        gletters.textContent = guessedLetters;
+        dashes.textContent = dashedWord.join(" ");
+    }
 }
 
 //Function that compares if arrays are equal
-var equalArrays = function(){
+var equalArrays = function () {
     var twStr = targetWordArray.toString();
     var dwStr = dashedWord.toString();
-    if(twStr === dwStr){
+    if (twStr === dwStr) {
         //Add Target word to "Completed Words" div in HTML
+        completedWords.push(targetWord);
+        completedWordsList.textContent = completedWords.join(" ");
         getNewWord();
+        guessedLetters = "";
     }
 }
 
 //Checks user guess against target word and replaces _ with letter
-var checkTargetWord = function(){
-    numberOfGuesses--;
-    for(var i = 0; i < targetWordArray.length; i++){
-        if(userGuess === targetWordArray[i]){
+var checkTargetWord = function () {
+    for (var i = 0; i < targetWordArray.length; i++) {
+        if (userGuess === targetWordArray[i]) {
             dashedWord[i] = userGuess;
         }
     }
     equalArrays();
+    guessedLettersList();
+    remainingGuesses.textContent = (numberOfGuesses);
 
 }
 
@@ -83,7 +103,11 @@ document.onkeyup = function (event) {
     userGuess = event.key.toLowerCase();
     userGuessCode = event.keyCode;
 
-    checkTargetWord();
-    guessedLettersList();
-    
+    if (numberOfGuesses > 1) {
+        checkTargetWord();
+    } else {
+        getNewWord();
+    }
+
+
 }
