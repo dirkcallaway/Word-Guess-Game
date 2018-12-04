@@ -25,6 +25,8 @@ var numberOfGuesses;
 var newGame = false;
 var completedWords = [];
 
+var soundYeah = new Audio("assets/yeah.mp3");
+
 var dashes = document.getElementById("dashed-letters");
 var gletters = document.getElementById("guessed-letters");
 var remainingGuesses = document.getElementById("remaining-guesses");
@@ -73,6 +75,7 @@ var equalArrays = function () {
     var twStr = targetWordArray.toString();
     var dwStr = dashedWord.toString();
     if (twStr === dwStr) {
+        soundYeah.play();
         //Add Target word to "Completed Words" div in HTML
         completedWords.push(targetWord);
         completedWordsList.textContent = completedWords;
