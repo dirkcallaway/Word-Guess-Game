@@ -75,7 +75,7 @@ var equalArrays = function () {
     if (twStr === dwStr) {
         //Add Target word to "Completed Words" div in HTML
         completedWords.push(targetWord);
-        completedWordsList.textContent = completedWords.join(" ");
+        completedWordsList.textContent = completedWords;
         getNewWord();
         guessedLetters = "";
     }
@@ -88,8 +88,8 @@ var checkTargetWord = function () {
             dashedWord[i] = userGuess;
         }
     }
-    equalArrays();
     guessedLettersList();
+    equalArrays();
     remainingGuesses.textContent = (numberOfGuesses);
 
 }
