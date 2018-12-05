@@ -1,6 +1,7 @@
 body {
-    background-color: black;
+    background-image: url("../images/bg2.jpg");
 }
+
 
 h1,
 h2,
@@ -8,10 +9,11 @@ h3 {
     color:red;
 }
 
-.jumbotron{
-    background-color: black;
-}
 
 p {
     color: white;
+}
+
+.jumbotron{
+    background-color: transparent;
 }
