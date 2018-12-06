@@ -2,13 +2,11 @@ body {
     background-image: url("../images/bg2.jpg");
 }
 
-
 h1,
 h2,
 h3 {
     color:red;
 }
-
 
 p {
     color: white;
@@ -16,4 +14,8 @@ p {
 
 .jumbotron{
     background-color: transparent;
+}
+
+#mainBox{
+    padding-bottom: 20px;
 }
